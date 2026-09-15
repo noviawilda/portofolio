@@ -482,16 +482,47 @@
 
 
     <!-- JAVASCRIPT -->
-    <script>
+   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+    const SUPABASE_URL = "https://yqjipzjpuuauexdnvbua.supabase.co";
+
+    const SUPABASE_KEY = "sb_publishable_ASGlA8rU0s9lpglUfwTrcQ_PHx0f1zI";
+
+    const supabase = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
     const form = document.getElementById("contactForm");
     const status = document.getElementById("status");
 
-    form.addEventListener("submit", function(event) {
+    form.addEventListener("submit", async function(event) {
         event.preventDefault();
 
-        status.textContent =
-            "Pesan berhasil dikirim!";
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const message = document.getElementById("message").value;
 
+        status.textContent = "Mengirim...";
+
+        const { error } = await supabase
+            .from("messages")
+            .insert([
+                {
+                    nama: name,
+                    email: email,
+                    message: message
+                }
+            ]);
+
+        if (error) {
+            console.error(error);
+            status.textContent = "Gagal mengirim pesan: " + error.message;
+            return;
+        }
+
+        status.textContent = "Pesan berhasil dikirim!";
         form.reset();
     });
 </script>
