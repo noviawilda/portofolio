@@ -483,22 +483,17 @@
 
     <!-- JAVASCRIPT -->
     <script>
+    const form = document.getElementById("contactForm");
+    const status = document.getElementById("status");
 
-        const form = document.getElementById("contactForm");
-        const status = document.getElementById("status");
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
 
-        form.addEventListener("submit", function(event) {
+        status.textContent =
+            "Pesan berhasil dikirim!";
 
-            event.preventDefault();
-
-            status.textContent =
-                "Pesan berhasil dikirim!";
-
-            form.reset();
-
-        });
-
-    </script>
-
+        form.reset();
+    });
+</script>
 </body>
 </html>
